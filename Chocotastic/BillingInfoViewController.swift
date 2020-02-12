@@ -85,10 +85,7 @@ private extension BillingInfoViewController {
         self?.validate(cardText: $0) ?? false //3
     }
       
-    creditCardValid
-      .subscribe(onNext: { [weak self] in
-        self?.creditCardNumberTextField.valid = $0 //4
-      }).disposed(by: disposeBag) //5
+    creditCardValid.bind(to: creditCardNumberTextField.rx.valid).disposed(by: disposeBag) //5
     
     let expirationValid = expirationDateTextField
       .rx
@@ -100,11 +97,7 @@ private extension BillingInfoViewController {
         self?.validate(expirationDateText: $0) ?? false
     }
         
-    expirationValid
-      .subscribe(onNext: { [unowned self] in
-        self.expirationDateTextField.valid = $0
-      })
-      .disposed(by: disposeBag)
+    expirationValid.bind(to: expirationDateTextField.rx.valid).disposed(by: disposeBag)
         
     let cvvValid = cvvTextField
       .rx
@@ -115,10 +108,7 @@ private extension BillingInfoViewController {
         self?.validate(cvvText: $0) ?? false
     }
         
-    cvvValid
-      .subscribe(onNext: { [weak self] in
-        self?.cvvTextField.valid = $0
-      })
+    cvvValid.bind(to: cvvTextField.rx.valid)
       .disposed(by: disposeBag)
     
     let everythingValid = Observable
